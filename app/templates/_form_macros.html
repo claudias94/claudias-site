@@ -1,0 +1,28 @@
+{% macro field(name, label, values, errors, type="text", required=False, maxlength=None, autocomplete=None, hint=None) %}
+<div class="field{% if errors.get(name) %} has-error{% endif %}">
+  <label for="{{ name }}">{{ label }}{% if required %} <span class="req" aria-hidden="true">*</span>{% endif %}</label>
+  <input id="{{ name }}" name="{{ name }}" type="{{ type }}" value="{{ values.get(name, '') }}"{% if required %} required{% endif %}{% if maxlength %} maxlength="{{ maxlength }}"{% endif %}{% if autocomplete %} autocomplete="{{ autocomplete }}"{% endif %}{% if errors.get(name) %} aria-invalid="true" aria-describedby="{{ name }}-err"{% endif %}>
+  {% if hint %}<small class="hint-text">{{ hint }}</small>{% endif %}
+  {% if errors.get(name) %}<small class="err" id="{{ name }}-err" role="alert">{{ errors.get(name) }}</small>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro select(name, label, options, values, errors) %}
+<div class="field{% if errors.get(name) %} has-error{% endif %}">
+  <label for="{{ name }}">{{ label }} <span class="req" aria-hidden="true">*</span></label>
+  <select id="{{ name }}" name="{{ name }}" required{% if errors.get(name) %} aria-invalid="true" aria-describedby="{{ name }}-err"{% endif %}>
+    <option value="">Select...</option>
+    {% for o in options %}<option value="{{ o }}"{% if values.get(name) == o %} selected{% endif %}>{{ o }}</option>{% endfor %}
+  </select>
+  {% if errors.get(name) %}<small class="err" id="{{ name }}-err" role="alert">{{ errors.get(name) }}</small>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro textarea(name, label, values, errors, rows=6, maxlength=None, hint=None) %}
+<div class="field{% if errors.get(name) %} has-error{% endif %}">
+  <label for="{{ name }}">{{ label }} <span class="req" aria-hidden="true">*</span></label>
+  <textarea id="{{ name }}" name="{{ name }}" rows="{{ rows }}" required{% if maxlength %} maxlength="{{ maxlength }}"{% endif %}{% if errors.get(name) %} aria-invalid="true" aria-describedby="{{ name }}-err"{% endif %}>{{ values.get(name, '') }}</textarea>
+  {% if hint %}<small class="hint-text">{{ hint }}</small>{% endif %}
+  {% if errors.get(name) %}<small class="err" id="{{ name }}-err" role="alert">{{ errors.get(name) }}</small>{% endif %}
+</div>
+{% endmacro %}

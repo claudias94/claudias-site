@@ -1,0 +1,10 @@
+<article class="card project-card">
+  <span class="badge badge-{{ p.kind_class }}">{{ p.kind }}</span>
+  <h3>{{ p.title }}</h3>
+  <p class="cat">{{ p.category }}</p>
+  <p>{{ p.pitch }}</p>
+  <ul class="chips">
+    {% for t in p.tech[:5] %}<li>{{ t }}</li>{% endfor %}
+  </ul>
+  <a class="link-arrow" href="{{ url_for('main.project_detail', slug=p.slug) }}">{{ p.cta }}</a>
+</article>

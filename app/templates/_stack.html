@@ -1,0 +1,19 @@
+<section class="section" id="stack">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Technology</p>
+      <h2>Technologies I Work With</h2>
+      <p class="lead">The tools and platforms I use across my IT, security and development work.</p>
+    </div>
+    <div class="grid grid-3">
+      {% for group, items in stack %}
+      <article class="card">
+        <h3>{{ group }}</h3>
+        <ul class="chips">
+          {% for item in items %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>

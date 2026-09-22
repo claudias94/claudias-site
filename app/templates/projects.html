@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Projects | {{ site_name }}{% endblock %}
+{% block content %}
+<section class="container page-head">
+  <p class="eyebrow">Projects</p>
+  <h1>Selected Work</h1>
+  <p class="lead">Software, security and systems projects. Each one is labelled so you can see exactly what it is: a software project, a laboratory exercise or a prototype.</p>
+</section>
+<section class="section alt">
+  <div class="container">
+    <div class="grid grid-3">
+      {% for p in projects %}{% include "_project_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

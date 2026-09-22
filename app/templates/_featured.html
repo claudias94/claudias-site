@@ -1,0 +1,13 @@
+<section class="section alt" id="projects">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Featured projects</p>
+      <h2>Things I've Built</h2>
+      <p class="lead">Each project is labelled honestly as a software project, a laboratory exercise or a prototype.</p>
+    </div>
+    <div class="grid grid-3">
+      {% for p in projects %}{% include "_project_card.html" %}{% endfor %}
+    </div>
+    <p class="more"><a class="link-arrow" href="{{ url_for('main.projects') }}">View all projects</a></p>
+  </div>
+</section>

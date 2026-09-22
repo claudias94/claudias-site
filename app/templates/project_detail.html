@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}{{ p.title }} | {{ site_name }}{% endblock %}
+{% block meta_description %}{{ p.pitch }}{% endblock %}
+{% block content %}
+<script>window.addEventListener("DOMContentLoaded",function(){sendEvent("project_page_viewed",{{ p.slug|tojson }});});</script>
+<section class="container page-head">
+  <p><a href="{{ url_for('main.projects') }}">← All projects</a></p>
+  <span class="badge badge-{{ p.kind_class }}">{{ p.kind }}</span>
+  <h1 class="cs-title">{{ p.title }}</h1>
+  <p class="cat">{{ p.category }}</p>
+  <p class="lead">{{ p.pitch }}</p>
+  {% if p.notice %}<div class="notice" role="note"><b>Please note:</b> {{ p.notice }}</div>{% endif %}
+  <div class="cta-row">
+    {% if p.github %}<a class="btn btn-primary" href="{{ p.github }}" rel="noopener noreferrer" target="_blank">View on GitHub</a>{% endif %}
+    <a class="btn {% if p.github %}btn-ghost{% else %}btn-primary{% endif %}" href="{{ url_for('contact.form', topic=p.title) }}">Discuss a Similar Project</a>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container cs">
+    <div class="shot" role="img" aria-label="Screenshot placeholder">Screenshot to be added</div>
+
+    {% if p.extras %}
+    <div class="cs-block">
+      <h2>{{ p.extras.environment_title }}</h2>
+      <ul class="chips">{% for e in p.extras.environment %}<li>{{ e }}</li>{% endfor %}</ul>
+    </div>
+    <div class="cs-block">
+      <h2>Project timeline</h2>
+      <ol class="timeline">{% for t in p.extras.timeline %}<li>{{ t }}</li>{% endfor %}</ol>
+    </div>
+    {% endif %}
+
+    {% for s in p.sections %}
+    <div class="cs-block">
+      <h2>{{ s.title }}</h2>
+      {% if s.key == 'tech' %}
+        <ul class="chips">{% for t in p.tech %}<li>{{ t }}</li>{% endfor %}</ul>
+      {% else %}
+        {% for para in s.body %}<p>{{ para }}</p>{% endfor %}
+        {% set sec_items = s.get("items") %}{% if sec_items %}<ul class="checks">{% for i in sec_items %}<li>{{ i }}</li>{% endfor %}</ul>{% endif %}
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>Need something similar?</h2>
+        <p>Tell me what you're trying to solve and I'll come back to you to discuss the requirements.</p>
+      </div>
+      <a class="btn btn-primary" href="{{ url_for('contact.form', topic=p.title) }}">Let's Discuss Your Project</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

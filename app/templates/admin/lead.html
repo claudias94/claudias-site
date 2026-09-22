@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Lead #{{ lead.id }} | Admin{% endblock %}
+{% block content %}
+{% include "admin/_bar.html" %}
+<section class="container admin-main">
+  <p><a href="{{ url_for('admin.dashboard') }}">&larr; All leads</a></p>
+  <h1>Lead #{{ lead.id }}: {{ lead.name }}</h1>
+
+  <div class="lead-grid">
+    <div class="card">
+      <h2>Request</h2>
+      <dl class="details">
+        <dt>Received</dt><dd>{{ lead.created_at.replace('T', ' ').replace('Z', ' UTC') }}</dd>
+        <dt>Email</dt><dd><a href="mailto:{{ lead.email }}">{{ lead.email }}</a></dd>
+        <dt>Phone</dt><dd>{% if lead.phone %}<a href="tel:{{ lead.phone }}">{{ lead.phone }}</a>{% else %}-{% endif %}</dd>
+        <dt>Organization</dt><dd>{{ lead.organization or '-' }}</dd>
+        <dt>Project type</dt><dd>{{ lead.project_type }}</dd>
+        <dt>Budget</dt><dd>{{ lead.budget }}</dd>
+        <dt>Timeline</dt><dd>{{ lead.timeline }}</dd>
+        <dt>Preferred contact</dt><dd>{{ lead.contact_method }}</dd>
+        <dt>Came from</dt><dd>{{ lead.source_topic or 'Direct' }}</dd>
+      </dl>
+      <h3>Description</h3>
+      <p class="prewrap">{{ lead.description }}</p>
+    </div>
+
+    <div class="card">
+      <h2>Follow-up</h2>
+      {% if errors %}<div class="alert" role="alert">Please correct the highlighted fields.</div>{% endif %}
+      <form method="post" action="{{ url_for('admin.lead_detail', lead_id=lead.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="field{% if errors.get('status') %} has-error{% endif %}">
+          <label for="status">Status</label>
+          <select id="status" name="status" required>
+            {% for s in statuses %}<option value="{{ s }}"{% if form.get('status') == s %} selected{% endif %}>{{ s }}</option>{% endfor %}
+          </select>
+          {% if errors.get('status') %}<small class="err">{{ errors.get('status') }}</small>{% endif %}
+        </div>
+        <div class="field{% if errors.get('follow_up_on') %} has-error{% endif %}">
+          <label for="follow_up_on">Follow-up date</label>
+          <input id="follow_up_on" name="follow_up_on" type="date" value="{{ form.get('follow_up_on', '') }}">
+          {% if errors.get('follow_up_on') %}<small class="err">{{ errors.get('follow_up_on') }}</small>{% endif %}
+        </div>
+        <div class="field{% if errors.get('notes') %} has-error{% endif %}">
+          <label for="notes">Notes (private)</label>
+          <textarea id="notes" name="notes" rows="6" maxlength="2000">{{ form.get('notes', '') }}</textarea>
+          {% if errors.get('notes') %}<small class="err">{{ errors.get('notes') }}</small>{% endif %}
+        </div>
+        <button class="btn btn-primary" type="submit">Save changes</button>
+      </form>
+      {% if lead.updated_at %}<p class="fine">Last updated {{ lead.updated_at.replace('T', ' ').replace('Z', ' UTC') }}</p>{% endif %}
+
+      <hr>
+      <form method="post" action="{{ url_for('admin.lead_delete', lead_id=lead.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label class="check"><input type="checkbox" name="confirm" value="yes"> I understand this permanently deletes this lead.</label>
+        <button class="btn btn-ghost btn-sm" type="submit">Delete lead</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

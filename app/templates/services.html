@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Services | {{ site_name }}{% endblock %}
+{% block meta_description %}IT support, cybersecurity and web development services from {{ site_name }}, {{ site_title }}.{% endblock %}
+{% block content %}
+<section class="container page-head">
+  <p class="eyebrow">Services</p>
+  <h1>How I Can Help</h1>
+  <p class="lead">Practical IT, cybersecurity and software work, organised into three areas. Not sure where your problem fits? Describe it and we'll work it out together.</p>
+</section>
+
+{% for cat in categories %}
+<section class="section {% if loop.index is even %}alt{% endif %}" id="{{ cat.key }}">
+  <div class="container">
+    <div class="section-head">
+      <span class="icon-badge">{{ icon(cat.icon) }}</span>
+      <h2>{{ cat.title }}</h2>
+      <p class="lead">{{ cat.summary }}</p>
+    </div>
+    <div class="grid grid-3">
+      {% for name, desc in cat.services %}
+      <article class="card">
+        <h3>{{ name }}</h3>
+        <p>{{ desc }}</p>
+        <a class="link-arrow" href="{{ url_for('contact.form', topic=name) }}" data-event="service_viewed" data-label="{{ name }}">Discuss This Project</a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block meta_title %}
+  <title>{% block title %}{{ site_name }} | {{ site_title }}{% endblock %}</title>
+  {% endblock %}
+  {% set desc = self.meta_description() %}
+  <meta name="description" content="{% block meta_description %}IT and cybersecurity professional providing practical technology, cybersecurity, web development, networking and automation solutions.{% endblock %}">
+  <link rel="canonical" href="{{ request.url_root.rstrip('/') }}{{ request.path }}">
+  <meta property="og:site_name" content="{{ site_name }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block og_title %}{{ site_name }} | {{ site_title }}{% endblock %}">
+  <meta property="og:description" content="{{ desc }}">
+  <meta property="og:url" content="{{ request.url_root.rstrip('/') }}{{ request.path }}">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="{{ url_for('main.index') }}">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span>Claudias <small>IT &amp; Cybersecurity</small></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">☰</button>
+      <nav id="nav-menu" class="nav-menu" aria-label="Main">
+        <a href="{{ url_for('main.index') }}" {% if request.endpoint == 'main.index' %}aria-current="page"{% endif %}>Home</a>
+        <a href="{{ url_for('main.services') }}" {% if request.endpoint == 'main.services' %}aria-current="page"{% endif %}>Services</a>
+        <a href="{{ url_for('main.projects') }}" {% if request.endpoint in ('main.projects','main.project_detail') %}aria-current="page"{% endif %}>Projects</a>
+        <a href="{{ url_for('main.about') }}" {% if request.endpoint == 'main.about' %}aria-current="page"{% endif %}>About</a>
+        <a class="btn btn-primary btn-sm" href="{{ url_for('contact.form') }}" data-event="contact_button_clicked" data-label="nav">Start a Project</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">{% block content %}{% endblock %}</main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <p>&copy; {{ site_name }} · {{ site_title }}</p>
+      <p>
+        <a href="mailto:{{ contact_email }}">Email</a> ·
+        <a href="{{ github_url }}" rel="noopener">GitHub</a> ·
+        <a href="{{ linkedin_url }}" rel="noopener">LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<div class="admin-bar">
+  <div class="container admin-bar-inner">
+    <a href="{{ url_for('admin.dashboard') }}"><b>Leads</b></a>
+    <form method="post" action="{{ url_for('admin.logout') }}" class="inline">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <span class="who">Signed in as {{ g.admin.username }}</span>
+      <button class="btn btn-ghost btn-sm" type="submit">Sign out</button>
+    </form>
+  </div>
+</div>
+{% for cat, msg in get_flashed_messages(with_categories=true) %}
+<div class="container"><div class="alert {% if cat == 'ok' %}ok{% endif %}" role="status">{{ msg }}</div></div>
+{% endfor %}

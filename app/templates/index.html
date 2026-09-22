@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">IT &amp; Cybersecurity Professional</p>
+      <h1>Technology Solutions. Security. Systems That Work.</h1>
+      <p class="lead">I'm an IT &amp; Cybersecurity Professional focused on building, securing and supporting practical technology solutions for organizations and businesses.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="{{ url_for('contact.form') }}" data-event="contact_button_clicked" data-label="hero">Start a Project</a>
+        <a class="btn btn-ghost" href="{{ url_for('main.projects') }}">View My Work</a>
+      </div>
+      <p class="hint">Also available: <a href="{{ url_for('contact.form') }}">Request a Technical Consultation</a></p>
+    </div>
+
+    <div class="dash" role="img" aria-label="Illustrative technical dashboard showing security monitoring, network, application and API status">
+      <div class="dash-bar"><i></i><i></i><i></i><span>ops-overview · illustrative</span></div>
+      <div class="dash-body">
+        <div class="tile"><span>Security monitoring</span><b class="ok">Active</b></div>
+        <div class="tile"><span>Network status</span><b class="ok">Healthy</b></div>
+        <div class="tile"><span>Application</span><b class="ok">Running</b></div>
+        <div class="tile"><span>API status</span><b class="ok">200 OK</b></div>
+        <div class="alerts">
+          <span class="label">Recent alerts (sample data)</span>
+          <p><em class="warn">MED</em> Repeated failed logins · 10:42</p>
+          <p><em class="info">LOW</em> New device on network · 09:15</p>
+          <p><em class="ok-dot">OK</em> Backup completed · 02:00</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFESSIONAL INTRODUCTION -->
+<section class="section alt" id="intro">
+  <div class="container intro-grid">
+    <div>
+      <p class="eyebrow">Introduction</p>
+      <h2>I don't just have technical knowledge. I build, troubleshoot, secure and improve real technology systems.</h2>
+      <p class="lead">I work across IT support, cybersecurity and software development, so a problem doesn't get stuck between specialties. Whether it's an unreliable network, a suspicious system or a tool your team needs built, the goal is the same: a practical solution that works and can be maintained.</p>
+    </div>
+    <div class="flow" role="img" aria-label="How work flows: IT and cybersecurity professional covers tech work, cyber work and web development, serving clients, leading to a paid project and a delivered solution">
+      <div class="flow-box top"><b>IT &amp; Cybersecurity Professional</b></div>
+      <div class="flow-arrow" aria-hidden="true">↓</div>
+      <div class="flow-row">
+        <div class="flow-box"><b>Tech Work</b><span>IT support · Networks · Systems · Servers · CCTV</span></div>
+        <div class="flow-box"><b>Cyber Work</b><span>Security audit · Monitoring · Incident response · Hardening</span></div>
+        <div class="flow-box"><b>Web / Dev</b><span>Websites · Python · Flask · APIs · Dashboards</span></div>
+      </div>
+      <div class="flow-arrow" aria-hidden="true">↓</div>
+      <div class="flow-box wide"><b>Clients &amp; Organizations</b><span>Businesses · Agencies · Startups</span></div>
+      <div class="flow-arrow" aria-hidden="true">↓</div>
+      <div class="flow-end"><span>Paid project</span><i aria-hidden="true">→</i><span class="win">Solution delivered</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Services</p>
+      <h2>How I Can Help</h2>
+      <p class="lead">Three areas of practical work, from keeping systems running to building the tools your organization needs.</p>
+    </div>
+    <div class="grid grid-3">
+      {% for cat in categories %}
+      <article class="card">
+        <span class="icon-badge">{{ icon(cat.icon) }}</span>
+        <h3>{{ cat.title }}</h3>
+        <p>{{ cat.summary }}</p>
+        <ul class="checks">
+          {% for name, desc in cat.services[:5] %}<li>{{ name }}</li>{% endfor %}
+        </ul>
+        <a class="link-arrow" href="{{ url_for('main.services') }}#{{ cat.key }}">See all {{ cat.title }} services</a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS I SOLVE -->
+<section class="section alt" id="problems">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Problems I solve</p>
+      <h2>Have a Technology Problem? Let's Find the Solution.</h2>
+    </div>
+    <div class="grid grid-3">
+      {% for problem, solution in problems %}
+      <article class="card">
+        <h3>{{ problem }}</h3>
+        <p class="solution">→ {{ solution }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "_featured.html" %}
+{% include "_stack.html" %}
+
+<!-- CLIENT TYPES -->
+<section class="section" id="clients">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Clients</p>
+      <h2>Who I Work With</h2>
+    </div>
+    <div class="grid grid-3">
+      {% for name, desc in audiences %}
+      <article class="card">
+        <h3>{{ name }}</h3>
+        <p>{{ desc }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- HOW I WORK -->
+<section class="section alt" id="process">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Process</p>
+      <h2>How I Work</h2>
+      <p class="lead">You're buying a working solution, not just hours.</p>
+    </div>
+    <ol class="steps">
+      {% for num, title, text in steps %}
+      <li class="step">
+        <span class="step-num">{{ num }}</span>
+        <h3>{{ title }}</h3>
+        <p>{{ text }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<!-- WHY WORK WITH ME -->
+<section class="section" id="why">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Trust</p>
+      <h2>Why Work With Me?</h2>
+    </div>
+    <ul class="checks two-col">
+      {% for point in trust %}<li>{{ point }}</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<!-- PROJECT REQUEST CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>Have a project in mind?</h2>
+        <p>Tell me what you're trying to solve. I'll come back to you to talk through the requirements.</p>
+      </div>
+      <a class="btn btn-primary" href="{{ url_for('contact.form') }}" data-event="contact_button_clicked" data-label="cta_band">Let's Discuss Your Project</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="container contact-block">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h2>{{ site_name }}</h2>
+      <p class="lead">{{ site_title }}</p>
+      <p><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
+      <p><a href="{{ github_url }}" rel="noopener">GitHub</a> &middot; <a href="{{ linkedin_url }}" rel="noopener">LinkedIn</a></p>
+    </div>
+    <a class="btn btn-primary" href="{{ url_for('contact.form') }}" data-event="contact_button_clicked" data-label="homepage_contact">Let's Discuss Your Project</a>
+  </div>
+</section>
+
+{% endblock %}

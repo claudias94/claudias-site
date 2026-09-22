@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% from "_form_macros.html" import field, select, textarea %}
+{% block title %}Start a Project | {{ site_name }}{% endblock %}
+{% block content %}
+<section class="container page-head">
+  <p class="eyebrow">Start a project</p>
+  <h1>Tell Me About Your Project</h1>
+  <p class="lead">Describe what you're trying to solve. The more detail you share, the more useful my reply will be.</p>
+</section>
+
+<section class="section alt">
+  <div class="container contact-grid">
+    <form class="form" method="post" action="{{ url_for('contact.form') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="source_topic" value="{{ values.get('source_topic', '') }}">
+
+      {% if errors.get('_form') %}
+        <div class="alert" role="alert">{{ errors.get('_form') }}</div>
+      {% elif errors %}
+        <div class="alert" role="alert">Please correct the highlighted fields and send again.</div>
+      {% endif %}
+
+      {% if values.get('source_topic') %}
+        <p class="topic-note">Enquiry about: <b>{{ values.get('source_topic') }}</b></p>
+      {% endif %}
+
+      <div class="form-row">
+        {{ field('name', 'Your name', values, errors, required=True, maxlength=100, autocomplete='name') }}
+        {{ field('email', 'Email address', values, errors, type='email', required=True, maxlength=254, autocomplete='email') }}
+      </div>
+      <div class="form-row">
+        {{ field('organization', 'Organization (optional)', values, errors, maxlength=150, autocomplete='organization') }}
+        {{ select('project_type', 'Project type', project_types, values, errors) }}
+      </div>
+      <div class="form-row">
+        {{ select('budget', 'Budget range', budgets, values, errors) }}
+        {{ select('timeline', 'Timeline', timelines, values, errors) }}
+      </div>
+      {{ textarea('description', 'Project description', values, errors, rows=7, maxlength=3000, hint="What are you trying to solve? Please don't include passwords or other secrets.") }}
+      <div class="form-row">
+        {{ select('contact_method', 'Preferred contact method', methods, values, errors) }}
+        {{ field('phone', 'Phone / WhatsApp number', values, errors, type='tel', maxlength=20, autocomplete='tel', hint='Needed only if you choose phone or WhatsApp.') }}
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="website">Leave this field empty</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button class="btn btn-primary" type="submit">Send Project Request</button>
+      <p class="fine">Your details are used only to reply to this request.</p>
+    </form>
+
+    <aside class="side-card">
+      <h2>What happens next</h2>
+      <ol class="side-steps">
+        <li>Your request is received and stored securely.</li>
+        <li>I review it and contact you by your preferred method.</li>
+        <li>We talk through the requirements.</li>
+        <li>If it's a fit, I send a proposal.</li>
+      </ol>
+      <h2>Prefer to reach out directly?</h2>
+      <p><b>{{ site_name }}</b><br>{{ site_title }}</p>
+      <p><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
+      <p><a href="{{ github_url }}" rel="noopener">GitHub</a> · <a href="{{ linkedin_url }}" rel="noopener">LinkedIn</a></p>
+    </aside>
+  </div>
+</section>
+{% endblock %}

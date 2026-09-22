@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Request received | {{ site_name }}{% endblock %}
+{% block content %}
+<section class="container page-head">
+  <p class="eyebrow">Request received</p>
+  <h1>Thank you.</h1>
+  <p class="lead">Your project request has been received. I'll review it and get back to you by your preferred contact method to talk through the requirements.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="{{ url_for('main.projects') }}">View My Work</a>
+    <a class="btn btn-ghost" href="{{ url_for('main.index') }}">Back home</a>
+  </div>
+</section>
+{% endblock %}

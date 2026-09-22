@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Leads | Admin{% endblock %}
+{% block content %}
+{% include "admin/_bar.html" %}
+<section class="container admin-main">
+  <h1>Leads</h1>
+
+  <div class="stat-grid">
+    <a class="stat{% if not current_status %} active{% endif %}" href="{{ url_for('admin.dashboard') }}"><b>{{ total_all }}</b><span>All</span></a>
+    {% for s in statuses %}
+    <a class="stat{% if current_status == s %} active{% endif %}" href="{{ url_for('admin.dashboard', status=s) }}"><b>{{ counts[s] }}</b><span>{{ s }}</span></a>
+    {% endfor %}
+  </div>
+
+  <form class="filter" method="get" action="{{ url_for('admin.dashboard') }}">
+    <select name="status" aria-label="Filter by status">
+      <option value="">All statuses</option>
+      {% for s in statuses %}<option value="{{ s }}"{% if current_status == s %} selected{% endif %}>{{ s }}</option>{% endfor %}
+    </select>
+    <input type="search" name="q" value="{{ q }}" placeholder="Search name, email or organization" maxlength="100" aria-label="Search leads">
+    <button class="btn btn-primary btn-sm" type="submit">Filter</button>
+  </form>
+
+  {% if rows %}
+  <div class="table-wrap">
+    <table class="leads">
+      <thead><tr><th>#</th><th>Received</th><th>Name</th><th>Project</th><th>Budget</th><th>Status</th><th>Follow-up</th></tr></thead>
+      <tbody>
+      {% for l in rows %}
+        <tr>
+          <td>{{ l.id }}</td>
+          <td>{{ l.created_at[:10] }}</td>
+          <td><a href="{{ url_for('admin.lead_detail', lead_id=l.id) }}">{{ l.name }}</a>{% if l.organization %}<small>{{ l.organization }}</small>{% endif %}</td>
+          <td>{{ l.project_type }}</td>
+          <td>{{ l.budget }}</td>
+          <td><span class="status status-{{ l.status|lower|replace(' ', '-') }}">{{ l.status }}</span></td>
+          <td>{{ l.follow_up_on or '-' }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="pager">
+    {{ total }} lead{{ '' if total == 1 else 's' }} · page {{ page }} of {{ pages }}
+    {% if page > 1 %}· <a href="{{ url_for('admin.dashboard', status=current_status or None, q=q or None, page=page - 1) }}">Previous</a>{% endif %}
+    {% if page < pages %}· <a href="{{ url_for('admin.dashboard', status=current_status or None, q=q or None, page=page + 1) }}">Next</a>{% endif %}
+  </p>
+  {% else %}
+  <p class="empty">No leads match. New project requests will appear here.</p>
+  {% endif %}
+</section>
+{% endblock %}

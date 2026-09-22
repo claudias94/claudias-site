@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}About | {{ site_name }}{% endblock %}
+{% block meta_description %}About {{ site_name }}, an IT and cybersecurity professional focused on practical technology, security and software work.{% endblock %}
+{% block content %}
+<section class="container page-head">
+  <p class="eyebrow">About</p>
+  <h1>{{ site_name }}</h1>
+  <p class="lead">{{ site_title }} with practical experience across networking, systems administration, cybersecurity and software development. Currently an IT Officer at the Kenya School of Government, focused on network and technical infrastructure operations, with hands-on exposure to server administration through administrative access to the institution's servers.</p>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Professional journey</p>
+      <h2>How I Got Here</h2>
+    </div>
+    <ol class="timeline wide">
+      {% for j in journey %}
+      <li>
+        <span class="tl-period">{{ j.period }}</span>
+        <h3>{{ j.title }}{% if j.placeholder %} <span class="badge badge-prototype">Placeholder</span>{% endif %}</h3>
+        <p>{{ j.text }}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Approach</p>
+      <h2>How I Work Through a Problem</h2>
+      <p class="lead">Whether troubleshooting a network, investigating suspicious activity, or building an application, the process stays the same:</p>
+    </div>
+    <ol class="approach-steps">
+      {% for step in approach_steps %}<li>{{ step }}</li>{% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Background</p>
+      <h2>Education</h2>
+      <p class="lead">{{ background }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>Have a project in mind?</h2>
+        <p>Tell me what you're trying to solve and I'll get back to you.</p>
+      </div>
+      <a class="btn btn-primary" href="{{ url_for('contact.form') }}" data-event="contact_button_clicked" data-label="about_page">Let's Discuss Your Project</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
