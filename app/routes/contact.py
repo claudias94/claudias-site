@@ -64,7 +64,8 @@ def form():
         return _render(values, {"_form": "Sorry, your request could not be saved. "
                                 "Please email me directly instead."}, 500)
 
-    notify_new_lead(lead_id, values)
+    detail_url = url_for("admin.lead_detail", lead_id=lead_id, _external=True)
+    notify_new_lead(lead_id, values, detail_url=detail_url)
     record("project_form_submitted", values["project_type"])
     session.pop("form_ts", None)
     return redirect(url_for("contact.thanks"))
