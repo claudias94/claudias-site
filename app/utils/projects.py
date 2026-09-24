@@ -44,7 +44,7 @@ PROJECT_LIST = [
     },
     {
         "slug": "cirt-lab",
-        "screenshot": None,  # e.g. "cirt-lab.png" once uploaded
+        "screenshot": "cirt.png",  # e.g. "cirt-lab.png" once uploaded
         "title": "Cyber Incident Response & Digital Forensics Lab",
         "kind": "Laboratory exercise",
         "kind_class": "lab",
@@ -93,7 +93,7 @@ PROJECT_LIST = [
     },
     {
         "slug": "kiams",
-        "screenshot": None,  # e.g. "kiams.png" once uploaded
+        "screenshot": "kiams.png",  # e.g. "kiams.png" once uploaded
         "title": "KIAMS: Kenya School of Government Internal Information & Alert Management System",
         "kind": "Prototype",
         "kind_class": "prototype",
