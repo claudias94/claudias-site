@@ -18,7 +18,12 @@
 
 <section class="section alt">
   <div class="container cs">
+    {% if p.screenshot %}
+    <img class="shot-img" src="{{ url_for('static', filename='img/projects/' + p.screenshot) }}"
+         alt="Screenshot of {{ p.title }}" loading="lazy">
+    {% else %}
     <div class="shot" role="img" aria-label="Screenshot placeholder">Screenshot to be added</div>
+    {% endif %}
 
     {% if p.extras %}
     <div class="cs-block">

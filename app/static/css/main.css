@@ -262,3 +262,7 @@ hr{border:0;border-top:1px solid var(--border);margin:1.4rem 0}
 .approach-steps li::before{content:counter(ap);display:inline-grid;place-items:center;
   width:1.6rem;height:1.6rem;border-radius:50%;background:var(--accent);color:#fff;
   font-size:.85rem;margin-right:.6rem}
+
+/* ---------- Project screenshots ---------- */
+.shot-img{display:block;width:100%;height:auto;
+  background:var(--bg);border:1px solid var(--border);border-radius:14px}

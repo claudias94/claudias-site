@@ -1,6 +1,7 @@
 PROJECT_LIST = [
     {
         "slug": "soc-log-analyzer",
+        "screenshot": "soc-log-analyzer.png",
         "title": "SOC Log Analyzer",
         "kind": "Software project",
         "kind_class": "software",
@@ -43,6 +44,7 @@ PROJECT_LIST = [
     },
     {
         "slug": "cirt-lab",
+        "screenshot": None,  # e.g. "cirt-lab.png" once uploaded
         "title": "Cyber Incident Response & Digital Forensics Lab",
         "kind": "Laboratory exercise",
         "kind_class": "lab",
@@ -91,6 +93,7 @@ PROJECT_LIST = [
     },
     {
         "slug": "kiams",
+        "screenshot": None,  # e.g. "kiams.png" once uploaded
         "title": "KIAMS: Kenya School of Government Internal Information & Alert Management System",
         "kind": "Prototype",
         "kind_class": "prototype",
